@@ -1,0 +1,27 @@
+class Solution:
+    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
+        if len(s1) + len(s2) != len(s3):
+            return False
+        #create cache
+        dp= {}
+        
+        #recursive dfs function that takes two indexes
+        def dfs(i,j):
+            #if both the indexes reach the end of their respective strings
+            #return True
+            if i == len(s1) and j == len(s2):
+                return True
+            #if the tuple of the indexes in cache return cached result
+            if (i,j) in dp:
+                return dp[(i,j)]
+            #if i is in bounds and 
+            #does the character at i equal the character at s3 
+            #if so we increment by 1 and return True
+            if i < len(s1) and s1[i] == s3[i+j] and dfs(i + 1, j):
+                return True
+            if j < len(s2) and s2[j] == s3[i+j] and dfs(i, j+1):
+                return True
+            dp[(i,j)] = False
+            return False
+        return dfs(0,0)
+            
